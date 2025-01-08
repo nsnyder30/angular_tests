@@ -33,7 +33,21 @@ export class TestComponent {
 	testVar = 's1';
 	view = 'Yearly';
 	selectedMonth = -1;
+
+	months = Array.from({ length: 12 }).map((v, i) => i);
+	month_list = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+
+	weeks = Array.from({ length: 5 }).map((v, i) => i);
+	days = Array.from({ length: 35 }).map((v, i) => i);
 	
+	getMonthName(month: number, short?: boolean) {
+		if(short) {
+			return this.month_list[month].substr(0, 3);
+		}
+
+		return this.month_list[month];
+	}
+
 	toggleTest() {
 		this.testVar = this.testVar == 's1' ? 's2' : 's1';
 	}
