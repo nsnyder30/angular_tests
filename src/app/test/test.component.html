@@ -1,2 +1,28 @@
-<router-outlet></router-outlet>
+<!-- <div [@testTransition]="testVar" (click)="toggleTest()">CURRENT STATUS: {{ testVar }}</div> -->
 
+<div class="calendar-container" [@viewTransition]="view">
+	<div class="row" *ngFor="let row of [0, 1, 2, 3]">
+		<div [@monthTransition]="selectedMonth == row * 4 + col ? 'expanded' : 'collapsed'" class="col month-cell border border-secondary" *ngFor="let col of [0, 1, 2]" (click)="selectMonth(row * 4 + col)">
+			{{row * 4 + col}}
+		</div>
+	</div>
+</div>
+<!--
+	<div [@Yearly2Monthly] *ngIf="view === 'Yearly'" class="container yearly-calendar">
+			<div class="row" *ngFor="let row of [0, 1, 2, 3]">
+				<div class="col year-cell" *ngFor="let col of [0, 1, 2]">
+					<button class="btn btn-light w-100 h-100" (click)="selectMonth(row * 4 + col)">
+						{{ getMonthName(row * 4 + col) }}
+					</button>
+				</div>
+			</div>
+		</div>
+		<div [@Monthly2Yearly] *ngIf="view !== 'Monthly'" class="container monthly-calendar">
+			<div class="row" *ngFor="let week of getWeeks()">
+				<div class="col month-cell" *ngFor="let day of week">
+					{{ day }}
+				</div>
+			</div>
+		</div>
+	</div>
+-->
