@@ -1,55 +1,190 @@
+$header_height: 30px;
+/* $month_height: (100% - $header_height) / 4; */
+$month_width: 100% / 3;
+/* $day_height: (100% - $header_height) / 5; */
+$day_height: (100% - 8%) / 5;
+$day_width: 100% / 7;
+
+$standard_transition: 250ms ease-in-out;
+$rapid_transition: 100ms ease-in-out;
+$delayed_transition: 100ms ease-in-out 150ms;
+
 .calendar-container {
 	position: relative;
-	overflow: hidden;
+	top: 5px;
+	left: 5px;
+	height: 40%;
+	width: 75%;
+	transition: all #{$standard_transition};
+
+	&.Yearly {
+	}
+	&.Monthly {
+	}
+	&.Weekly {
+		height: 20%;
+	}
+	&.Daily {
+		height: 20%;
+		width: 40%;
+	}
 }
 
-.year-view,
-.month-view {
+.calendar-header {
 	position: absolute;
-	top: 0;
-	left: 0;
 	width: 100%;
-	height: 100%;
+	height: $header_height;
+	top: 0%;
 }
 
-.yearly-calendar, 
-.monthly-calendar {
-	width: 100%;
-	height: 100%;
-	table-layout: fixed; 
-	border-collapse: collapse;
+.calendar-navigator {
+	display: inline-block;
+	width: 10%;
 }
 
-.yearly-calendar tr {
-	height: calc(100% / 3);
+.calendar-title {
+	display: inline-block;
+	width: 80%;
 }
 
-.year-cell {
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	border: 1px solid #ccc;
-	padding: 5px;
-}
-
-.month-view td {
-	text-align: center;
-	vertical-align: middle;
+.year-container {
+	position: absolute;
+	z-index: 10;
+	top: $header_height;
+	left: 0%;
 	height: 100%;
 	width: 100%;
 }
 
-button {
-	display: block;
-	width: 100%;
-	height: 100%;
-	border: none;
-	background: none;
+.month-container {
+	position: absolute;
+	z-index: 12;
+	height: calc((100% - #{$header_height}) / 4);
+	width: $month_width;
 	cursor: pointer;
-	font-size: 1rem;
+	transition: 
+		top #{$standard_transition},
+		left #{$standard_transition}, 
+		width #{$standard_transition}, 
+		height #{$standard_transition}, 
+		opacity #{$delayed_transition};
+
+
+	&.selected {
+		top: $header_height;
+		left: 0%;
+		width: 100%;
+		height: calc(100% - #{$header_height});
+		opacity: 1;
+		z-index: 13;
+	}
+
+	&.hidden {
+		width: $month_width;
+		height: calc(100% - #{$header_height}) / 4;
+		opacity: 0;
+		transition:
+			top #{$standard_transition}, 
+			left #{$standard_transition}, 
+			width #{$standard_transition}, 
+			height #{$standard_transition}, 
+			opacity #{$rapid_transition};
+	}
+
+	& > span {
+		vertical-align: middle;
+		display: inline-block;
+		opacity: 1;
+		transition: all 200ms ease-in-out 300ms;
+	}
+
+	&.selected > span {
+		opacity: 0;
+		transition: all 200ms ease-in-out;
+	}
 }
 
-button:hover {
-	transform: scale(1.1);
-	background: rgba(0, 0, 0, 0.1);
+@for $r from 0 through 3 {
+	@for $c from 0 through 2 {
+		$mn: $r * 3 + $c;
+		:not(.selected).month-container.mn#{$mn} {
+			top: calc(#{$header_height} + (100% - #{$header_height}) * $r / 4);
+			left: $c * $month_width;
+		}
+	}
+}
+
+.day-container {
+	z-index: 14;
+	position: absolute;
+	height: $day_height;
+	width: $day_width;
+	cursor: pointer;
+	transition: 
+		top #{$standard_transition}, 
+		left #{$standard_transition}, 
+		width #{$standard_transition}, 
+		height #{$standard_transition}, 
+		opacity #{$delayed_transition};
+	
+	&.selectedWeek {
+		height: calc(100% - #{$header_height});
+		top: $header_height;
+		@for $r from 0 through 4 {
+			@for $c from 0 through 6 {
+				$d: $r * 7 + $c;
+				&.dy#{d} {
+					left: $c * $day_width;
+				}
+			}
+		}
+		width: $day_width;
+		opacity: 1;
+		z-index: 15;
+		transition:
+			top #{$standard_transition}, 
+			left #{$standard_transition}, 
+			width #{$standard_transition}, 
+			height #{$standard_transition}, 
+			opacity #{$delayed_transition};
+	}
+
+	&.selectedDay {
+		height: calc(100% - #{$header_height});
+		top: $header_height;
+		left: 0%;
+		width: 100%;
+		opacity: 1;
+		z-index: 15;
+		transition:
+			top #{$standard_transition}, 
+			left #{$standard_transition}, 
+			width #{$standard_transition}, 
+			height #{$standard_transition}, 
+			opacity #{$delayed_transition};
+	}
+
+	&.hidden {
+		height: 0%;
+		width: 0%;
+		opacity: 0;
+		transition:
+			top #{$standard_transition}, 
+			left #{$standard_transition}, 
+			width #{$standard_transition}, 
+			height #{$standard_transition}, 
+			opacity #{$rapid_transition};
+	}
+}
+
+@for $r from 0 through 4 {
+	@for $c from 0 through 6 {
+		$d: $r * 7 + $c;
+		:not(.selectedDay).day-container.dy#{$d} {
+			left: $c * $day_width;
+			&:not(.selectedWeek) {
+				top: calc(#{$header_height} + $r * #{$day_height});
+			}
+		}
+	}
 }

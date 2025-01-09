@@ -1,27 +1,33 @@
-<div [@testTransition]="testVar" (click)="toggleTest()">CURRENT VIEW: {{ view }}</div>
-
-<div class="calendar-container">
-	<div [@viewTransition]="view">
-<!--		<ng-container [hidden]="view !== 'Yearly'"> -->
-		<div [@Yearly2Monthly] *ngIf="view === 'Yearly'" class="container yearly-calendar">
-			<div class="row" *ngFor="let row of [0, 1, 2, 3]">
-				<div class="col year-cell" *ngFor="let col of [0, 1, 2]">
-					<button class="btn btn-light w-100 h-100" (click)="selectMonth(row * 4 + col)">
-						{{ getMonthName(row * 4 + col) }}
-					</button>
-				</div>
-			</div>
+<div class="calendar-container {{view}}">
+	<!-- HEADER -->
+	<div class="calendar-header border border-secondary">
+		<div class="calendar-navigator prev text-center a-text--noselect u-clickable" (click)="transition('prev')">
+			<<
 		</div>
-<!--		</ng-container> -->
-
-<!--		<ng-container [hidden]="view !== 'Monthly'"> -->
-		<div [@Monthly2Yearly] *ngIf="view !== 'Monthly'" class="container monthly-calendar">
-			<div class="row" *ngFor="let week of getWeeks()">
-				<div class="col month-cell" *ngFor="let day of week">
-					{{ day }}
-				</div>
-			</div>
+		
+		<div class="calendar-title text-center text-nowrap a-text--noselect u-clickable" (click)="titleClick()">
+			{{calendarTitle}}
 		</div>
-<!--		</ng-container>	-->
+
+		<div class="calendar-navigator next text-center text-nowrap a-text--noselect u-clickable" (click)="transition('next')">
+			>>
+		</div>
+	</div>
+
+	<!-- CALENDAR CELLS -->
+	<div *ngFor="let mnth of months" (click)="selectMonth(mnth)" 
+	    class="month-container mn{{mnth}} border border-secondary text-center align-middle"
+	    [class.selected]="selection('month', 'Monthly', mnth)" 
+	    [class.hidden]="hide('month', mnth)">
+		<span class="a-text--noselect">{{ getMonthName(mnth) }}</span>
+	</div>
+
+	<div *ngFor="let day of days" (click)="selectDay(day)" 
+	     class="day-container dy{{day}} border border-secondary text-center"
+	     [class.a-color--gray]="idx_to_date(day).getMonth() != selectedDate.getMonth()" 
+	     [class.selectedWeek]="selection('day', 'Weekly', day)" 
+	     [class.selectedDay]="selection('day', 'Daily', day)" 
+	     [class.hidden]="hide('day', day)">
+		<span class="a-text--noselect">{{ getDayText(day) }}</span>
 	</div>
 </div>
