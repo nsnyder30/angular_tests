@@ -8,6 +8,13 @@ import { trigger, transition, state, style, animate, query, group } from '@angul
 	styleUrl: './test.component.scss', 
 	animations: [
 		trigger('monthTransition', [
+			state('selected', style({ width: '100%', height: '100%' })), 
+			state('unselected', style({ opacity: 0 })), 
+			transition('selected => unselected', animate('500ms ease-in')), 
+			transition('unselected => selected', animate('500ms ease-out'))
+		]), 
+/*
+		trigger('monthTransition', [
 			state('collapsed', style({ transform: 'scale(1)' })), 
 			state('expanded', style({ transform: 'scale(2)' })), 
 			transition('collapsed => expanded', animate('500ms ease-in')), 
@@ -25,6 +32,7 @@ import { trigger, transition, state, style, animate, query, group } from '@angul
 			transition('Yearly => Monthly', animate('500ms ease-in')), 
 			transition('Monthly => Yearly', animate('500ms ease-out'))
 		])
+*/
 	]	
 })
 
@@ -99,7 +107,46 @@ console.log({msg: 'select Month fired'});
 		}
 	}
 
+	selection(target: string, view: string, idx: number) {
+		if(view != this.view) {
+			return false;
+		}
+
+		switch(target) {
+			case 'month':
+				return this.selectedMonth === idx;
+				break;
+			case 'day':
+				return false;
+				break;
+		}
+
+		return false;
+	}
+
+	hide(target: string, view: string, idx: number) {
+		if(view != this.view) {
+			return false;
+		}
+
+		switch(target) {
+			case 'month':
+				return this.selectedMonth !== idx;
+				break;
+			case 'day':
+				return false;
+				break;
+		}
+
+		return false;
+	}
+
 	showDays() {
-		this.view == 'Monthly' || this.view == 'Weekly' || this.view == 'Daily';
+		return this.view == 'Monthly' || this.view == 'Weekly' || this.view == 'Daily';
+	}
+
+	showMonths() {
+		return true;
+		return this.view == 'Yearly' || this.view == 'Monthly';
 	}
 }

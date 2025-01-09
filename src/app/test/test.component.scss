@@ -36,7 +36,7 @@ $day_width: 100% / 7;
 
 .year-container {
 	position: absolute;
-	z-index: 11;
+	z-index: 10;
 	top: $header_height;
 	left: 0%;
 	height: 100%;
@@ -49,12 +49,40 @@ $day_width: 100% / 7;
 	height: $month_height;
 	width: $month_width;
 	cursor: pointer;
+	transition: 
+		top 500ms ease-in-out,
+		left 500ms ease-in-out, 
+		width 500ms ease-in-out, 
+		height 500ms ease-in-out, 
+		opacity 200ms ease-in-out 300ms;
+
+
+	&.selected {
+		top: $header_height;
+		left: 0%;
+		width: 100%;
+		height: calc(100% - #{$header_height});
+		opacity: 1;
+		z-index: 13;
+	}
+
+	&.hidden {
+		width: $month_width;
+		height: $month_height;
+		opacity: 0;
+		transition:
+			top 500ms ease-in-out, 
+			left 500ms ease-in-out, 
+			width 500ms ease-in-out, 
+			height 500ms ease-in-out, 
+			opacity 200ms ease-in-out;
+	}
 }
 
 @for $r from 0 through 3 {
 	@for $c from 0 through 2 {
 		$mn: $r * 3 + $c;
-		.month-container.mn#{$mn} {
+		:not(.selected).month-container.mn#{$mn} {
 			top: $header_height + $month_height * $r;
 			left: $c * $month_width;
 		}
@@ -67,6 +95,9 @@ $day_width: 100% / 7;
 	height: $day_height;
 	width: $day_width;
 	cursor: pointer;
+}
+.day-container.selected {
+	z-index: 15;
 }
 
 @for $r from 0 through 4 {

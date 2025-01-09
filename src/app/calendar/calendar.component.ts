@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { trigger, transition, style, animate, query, group } from '@angular/animations';
+import { trigger, transition, state, style, animate, query, group } from '@angular/animations';
 
 type CalendarView = 'Yearly' | 'Monthly' | 'Weekly' | 'Daily';
 
@@ -7,31 +7,39 @@ type CalendarView = 'Yearly' | 'Monthly' | 'Weekly' | 'Daily';
 	selector: 'app-calendar',
 	standalone: false,
 	templateUrl: './calendar.component.html',
-	styleUrl: './calendar.component.css', 
+	styleUrl: './calendar.component.scss', 
 	animations: [
+		trigger('testTransition', [
+			state('s1', style({ backgroundColor: '#F00' })), 
+			state('s2', style({ backgroundColor: '#00F' })), 
+			transition('s1 => s2', animate('500ms ease-in')), 
+			transition('s2 => s1', animate('500ms ease-out'))
+		]), 
 		trigger('viewTransition', [
-	  		transition('Yearly => Monthly', [
+	  		transition('Yearly2Monthly', [
+				query(':enter, :leave', style({ position: 'absolute', width: '100%', height: '100%' }), { optional: true }), 
 				group([
-					query('.year-cell', [
-						style({ transform: 'scale(1)', opcaity: 1 }), 
-						animate('500ms ease-in', style({transform: 'scale(2)', opacity: 0 }))
-					]), 
-					query('.month-view', [
+					query(':leave', [
+						style({ transform: 'scale(1)', opacity: 1 }), 
+						animate('500ms ease-in', style({ transform: 'scale(2)', opacity: 0}))
+					], { optional: true}), 
+					query(':enter', [
 						style({ transform: 'scale(0.5)', opacity: 0 }), 
-						animate('500ms ease-out', style({transform: 'scale(1)', opacity: 1 }))
-					])
+						animate('500ms ease-out', style({ transform: 'scale(1)', opacity: 1}))
+					], {optional: true })
 				])
 			]), 
-			transition('Monthly => Yearly', [
+			transition('Monthly2Yearly', [
+				query(':enter, :leave', style({ position: 'absolute', width: '100%', height: '100%' }), { optional: true }), 
 				group([
-					query('.month-view', [
+					query(':leave', [
 						style({ transform: 'scale(1)', opacity: 1 }), 
-						animate('500ms ease-in', style({ transform: 'scale(0.5)', opacity: 0 }))
-					]), 
-					query('.year-cell', [
+						animate('500ms ease-in', style({ transform: 'scale(0.5)', opacity: 0}))
+					], { optional: true }), 
+					query(':enter', [
 						style({ transform: 'scale(2)', opacity: 0 }), 
 						animate('500ms ease-out', style({ transform: 'scale(1)', opacity: 1 }))
-					])
+					], { optional: true })
 				])
 			])
 		])
@@ -42,12 +50,24 @@ export class CalendarComponent {
 	month_list = ['January','February','Match','April','May','June','July','August','September','October','November','December'] as const;
 	view: CalendarView = 'Yearly';
 	selectedDate: Date = new Date();
+	testVar = 's1';
+
+	toggleTest() {
+		this.testVar = this.testVar == 's1' ? 's2' : 's1'
+	}
 
 	switchView(view: CalendarView): void { 
+console.log({msg: 'switchView called', view: view});
 		this.view = view;
 	}
 
+	selectMonth(month: number) {
+		this.selectedDate.setMonth(month);
+		this.switchView('Monthly');
+	}
+
 	navigate(direction: 'previous' | 'next'): void {
+console.log({msg: 'navigate called', direction: direction });
 		const date = new Date(this.selectedDate);
 		const sgn = direction === 'next' ? 1 : -1;
 		if (this.view === 'Yearly') {

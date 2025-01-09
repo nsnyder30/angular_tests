@@ -1,13 +1,27 @@
-<div style="background-color: #FF0">TEST DIV</div>
+<div [@testTransition]="testVar" (click)="toggleTest()">CURRENT VIEW: {{ view }}</div>
 
 <div class="calendar-container">
-	<div class="container yearly-calendar">
-		<div class="row" *ngFor="let row of [0, 1, 2]">
-			<div class="col year-cell" *ngFor="let col of [0, 1, 2, 3]">
-				<button class="btn btn-light w-100 h-100" (click)="switchView('Monthly')">
-					{{ getMonthName(row * 4 + col) }}
-				</button>
+	<div [@viewTransition]="view">
+<!--		<ng-container [hidden]="view !== 'Yearly'"> -->
+		<div [@Yearly2Monthly] *ngIf="view === 'Yearly'" class="container yearly-calendar">
+			<div class="row" *ngFor="let row of [0, 1, 2, 3]">
+				<div class="col year-cell" *ngFor="let col of [0, 1, 2]">
+					<button class="btn btn-light w-100 h-100" (click)="selectMonth(row * 4 + col)">
+						{{ getMonthName(row * 4 + col) }}
+					</button>
+				</div>
 			</div>
 		</div>
+<!--		</ng-container> -->
+
+<!--		<ng-container [hidden]="view !== 'Monthly'"> -->
+		<div [@Monthly2Yearly] *ngIf="view !== 'Monthly'" class="container monthly-calendar">
+			<div class="row" *ngFor="let week of getWeeks()">
+				<div class="col month-cell" *ngFor="let day of week">
+					{{ day }}
+				</div>
+			</div>
+		</div>
+<!--		</ng-container>	-->
 	</div>
 </div>

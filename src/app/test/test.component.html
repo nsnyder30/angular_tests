@@ -19,7 +19,7 @@
 	</div>
 	</ng-container>
 
-	<div *ngFor="let mnth of months" (click)="selectMonth(mnth)" class="month-container mn{{mnth}} border border-secondary text-center align-middle">
+	<div *ngFor="let mnth of months" (click)="selectMonth(mnth)" [class.selected]="selection('month', 'Monthly', mnth)" [class.hidden]="hide('month', 'Monthly', mnth)" class="month-container mn{{mnth}} border border-secondary text-center align-middle">
 		{{ getMonthName(mnth) }}
 	</div>
 
