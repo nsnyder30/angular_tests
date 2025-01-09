@@ -10,7 +10,7 @@ import { trigger, transition, state, style, animate, query, group } from '@angul
 })
 
 export class CalendarComponent {
-	view = 'Yearly';
+	view = 'Monthly';
 	selectedDate = new Date();
 	selectedMonth = -1;
 	weekStart = this.selectedDate.getTime() - this.selectedDate.getDay() * 24 * 3600 * 1000;
