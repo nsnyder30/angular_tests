@@ -1,0 +1,80 @@
+$header_height: 10%;
+$month_height: (100% - $header_height) / 4;
+$month_width: 100% / 3;
+$day_height: (100% - $header_height) / 5;
+$day_width: 100% / 7;
+
+.calendar-container {
+	position: relative;
+	top: 5px;
+	left: 5px;
+	height: 40%;
+	width: 50%;
+}
+
+.calendar-navigator {
+	position: absolute;
+	width: 10%;
+	height: $header_height;
+	top: 0%;
+}
+.calendar-navigator.prev {
+	left: 0%;
+}
+.calendar-navigator.next {
+	right: 0%;
+}
+
+.calendar-title {
+	position: absolute;
+	top: 0%;
+	left: 50%;
+	width: 80%;
+	height: $header_height;
+	transform: translate(-50%);
+}
+
+.year-container {
+	position: absolute;
+	z-index: 11;
+	top: $header_height;
+	left: 0%;
+	height: 100%;
+	width: 100%;
+}
+
+.month-container {
+	position: absolute;
+	z-index: 12;
+	height: $month_height;
+	width: $month_width;
+	cursor: pointer;
+}
+
+@for $r from 0 through 3 {
+	@for $c from 0 through 2 {
+		$mn: $r * 3 + $c;
+		.month-container.mn#{$mn} {
+			top: $header_height + $month_height * $r;
+			left: $c * $month_width;
+		}
+	}
+}
+
+.day-container {
+	z-index: 14;
+	position: absolute;
+	height: $day_height;
+	width: $day_width;
+	cursor: pointer;
+}
+
+@for $r from 0 through 4 {
+	@for $c from 0 through 6 {
+		$d: $r * 7 + $c;
+		.day-container.dy#{$d} {
+			top: $header_height + $r * $day_height;
+			left: $c * $day_width;
+		}
+	}
+}

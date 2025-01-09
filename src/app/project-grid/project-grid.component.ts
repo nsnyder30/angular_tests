@@ -7,7 +7,7 @@ import { DatePipe } from '@angular/common';
   standalone: false,
   
   templateUrl: './project-grid.component.html',
-  styleUrl: './project-grid.component.css'
+  styleUrl: './project-grid.component.scss'
 })
 
 export class ProjectGridComponent implements OnInit {
