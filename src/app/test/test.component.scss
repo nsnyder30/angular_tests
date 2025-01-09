@@ -1,8 +1,12 @@
-$header_height: 10%;
+$header_height: 8%;
 $month_height: (100% - $header_height) / 4;
 $month_width: 100% / 3;
 $day_height: (100% - $header_height) / 5;
 $day_width: 100% / 7;
+
+$standard_transition: 500ms ease-in-out;
+$rapid_transition: 200ms ease-in-out;
+$delayed_transition: 200ms ease-in-out 300ms;
 
 .calendar-container {
 	position: relative;
@@ -12,26 +16,21 @@ $day_width: 100% / 7;
 	width: 50%;
 }
 
-.calendar-navigator {
+.calendar-header {
 	position: absolute;
-	width: 10%;
+	width: 100%;
 	height: $header_height;
 	top: 0%;
 }
-.calendar-navigator.prev {
-	left: 0%;
-}
-.calendar-navigator.next {
-	right: 0%;
+
+.calendar-navigator {
+	display: inline-block;
+	width: 10%;
 }
 
 .calendar-title {
-	position: absolute;
-	top: 0%;
-	left: 50%;
+	display: inline-block;
 	width: 80%;
-	height: $header_height;
-	transform: translate(-50%);
 }
 
 .year-container {
@@ -50,11 +49,11 @@ $day_width: 100% / 7;
 	width: $month_width;
 	cursor: pointer;
 	transition: 
-		top 500ms ease-in-out,
-		left 500ms ease-in-out, 
-		width 500ms ease-in-out, 
-		height 500ms ease-in-out, 
-		opacity 200ms ease-in-out 300ms;
+		top #{$standard_transition},
+		left #{$standard_transition}, 
+		width #{$standard_transition}, 
+		height #{$standard_transition}, 
+		opacity #{$delayed_transition};
 
 
 	&.selected {
@@ -71,11 +70,23 @@ $day_width: 100% / 7;
 		height: $month_height;
 		opacity: 0;
 		transition:
-			top 500ms ease-in-out, 
-			left 500ms ease-in-out, 
-			width 500ms ease-in-out, 
-			height 500ms ease-in-out, 
-			opacity 200ms ease-in-out;
+			top #{$standard_transition}, 
+			left #{$standard_transition}, 
+			width #{$standard_transition}, 
+			height #{$standard_transition}, 
+			opacity #{$rapid_transition};
+	}
+
+	& > span {
+		vertical-align: middle;
+		display: inline-block;
+		opacity: 1;
+		transition: all 200ms ease-in-out 300ms;
+	}
+
+	&.selected > span {
+		opacity: 0;
+		transition: all 200ms ease-in-out;
 	}
 }
 
@@ -95,17 +106,71 @@ $day_width: 100% / 7;
 	height: $day_height;
 	width: $day_width;
 	cursor: pointer;
-}
-.day-container.selected {
-	z-index: 15;
+	transition: 
+		top #{$standard_transition}, 
+		left #{$standard_transition}, 
+		width #{$standard_transition}, 
+		height #{$standard_transition}, 
+		opacity #{$delayed_transition};
+	
+	&.selectedWeek {
+		height: 100% - $header_height;
+		top: $header_height;
+		@for $r from 0 through 4 {
+			@for $c from 0 through 6 {
+				$d: $r * 7 + $c;
+				&.dy#{d} {
+					left: $c * $day_width;
+				}
+			}
+		}
+		width: $day_width;
+		opacity: 1;
+		z-index: 15;
+		transition:
+			top #{$standard_transition}, 
+			left #{$standard_transition}, 
+			width #{$standard_transition}, 
+			height #{$standard_transition}, 
+			opacity #{$delayed_transition};
+	}
+
+	&.selectedDay {
+		height: 100% - $header_height;
+		top: $header_height;
+		left: 0%;
+		width: 100%;
+		opacity: 1;
+		z-index: 15;
+		transition:
+			top #{$standard_transition}, 
+			left #{$standard_transition}, 
+			width #{$standard_transition}, 
+			height #{$standard_transition}, 
+			opacity #{$delayed_transition};
+	}
+
+	&.hidden {
+		height: 0%;
+		width: 0%;
+		opacity: 0;
+		transition:
+			top #{$standard_transition}, 
+			left #{$standard_transition}, 
+			width #{$standard_transition}, 
+			height #{$standard_transition}, 
+			opacity #{$rapid_transition};
+	}
 }
 
 @for $r from 0 through 4 {
 	@for $c from 0 through 6 {
 		$d: $r * 7 + $c;
-		.day-container.dy#{$d} {
-			top: $header_height + $r * $day_height;
+		:not(.selectedDay).day-container.dy#{$d} {
 			left: $c * $day_width;
+			&:not(.selectedWeek) {
+				top: $header_height + $r * $day_height;
+			}
 		}
 	}
 }

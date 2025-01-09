@@ -42,7 +42,8 @@ export class TestComponent {
 	view = 'Yearly';
 	selectedDate = new Date();
 	selectedMonth = -1;
-	selectedDay = -1;
+	weekStart = this.selectedDate.getTime() - this.selectedDate.getDay() * 24 * 3600 * 1000;
+	weekEnd = this.weekStart + 6 * 24 * 3600 * 1000;
 	calendarTitle = this.selectedDate.getFullYear().toString();
 
 	months = Array.from({ length: 12 }).map((v, i) => i);
@@ -59,6 +60,11 @@ export class TestComponent {
 		return this.month_list[month];
 	}
 
+	getDayText(day: number) {
+		let dt = this.idx_to_date(day);
+		return dt.getDate();
+	}
+
 	toggleTest() {
 		this.testVar = this.testVar == 's1' ? 's2' : 's1';
 	}
@@ -72,8 +78,8 @@ export class TestComponent {
 				this.calendarTitle = this.getMonthName(this.selectedDate.getMonth());
 				break;
 			case 'Weekly':
-				let week_start = this.selectedDate;
-				let week_end = this.selectedDate;
+				let week_start = new Date(this.selectedDate);
+				let week_end = new Date(this.selectedDate);
 				week_start.setDate(week_start.getDate() - week_start.getDay());
 				week_end.setDate(week_end.getDate() + 6 - week_end.getDay());
 				this.calendarTitle = [
@@ -92,8 +98,30 @@ export class TestComponent {
 		this.updateTitle();
 	}
 
+	titleClick() {
+		switch(this.view) {
+			case 'Monthly': this.toggleView('Yearly'); break;
+			case 'Weekly': this.toggleView('Monthly');break;
+			case 'Daily': this.toggleView('Weekly');break;
+		}
+	}
+	
+	idx_to_date(idx: number) {
+		let dt = new Date(this.selectedDate);
+		dt.setDate(1);
+		dt.setDate(dt.getDate() + idx - dt.getDay());
+		return dt;
+	}
+
 	selectDay(day: number) {
 console.log({msg: 'select Day fired'});
+		if(this.view == 'Monthly' || this.view == 'Weekly' || this.view == 'Daily') {
+			this.selectedDate = this.idx_to_date(day);
+			this.weekStart = this.selectedDate.getTime() - this.selectedDate.getDay() * 24 * 3600 * 1000;
+			this.weekEnd = this.weekStart + 6 * 24 * 3600 * 1000;
+			const newView = this.view == 'Weekly' ? 'Daily' : 'Weekly';
+			this.toggleView(newView);
+		}
 	}
 
 	selectMonth(month: number) {
@@ -103,10 +131,12 @@ console.log({msg: 'select Month fired'});
 			this.toggleView('Yearly');
 		} else {
 			this.selectedMonth = month;
+			this.selectedDate.setDate(1);
+			this.selectedDate.setMonth(month);
 			this.toggleView('Monthly');
 		}
 	}
-
+	
 	selection(target: string, view: string, idx: number) {
 		if(view != this.view) {
 			return false;
@@ -117,36 +147,25 @@ console.log({msg: 'select Month fired'});
 				return this.selectedMonth === idx;
 				break;
 			case 'day':
-				return false;
+				let dt = this.idx_to_date(idx).getTime();
+				return view == 'Weekly' ? dt >= this.weekStart && dt <= this.weekEnd : dt == this.selectedDate.getTime();
 				break;
 		}
 
 		return false;
 	}
 
-	hide(target: string, view: string, idx: number) {
-		if(view != this.view) {
-			return false;
-		}
-
+	hide(target: string, idx: number) {
 		switch(target) {
 			case 'month':
-				return this.selectedMonth !== idx;
+				return !(this.view == 'Monthly' && this.selectedMonth === idx || this.view == 'Yearly');
 				break;
 			case 'day':
-				return false;
+				let dt = this.idx_to_date(idx).getTime();
+				return !(this.view == 'Monthly' || this.view == 'Weekly' && dt >= this.weekStart && dt <= this.weekEnd || this.view == 'Daily' && dt == this.selectedDate.getTime());
 				break;
 		}
 
 		return false;
-	}
-
-	showDays() {
-		return this.view == 'Monthly' || this.view == 'Weekly' || this.view == 'Daily';
-	}
-
-	showMonths() {
-		return true;
-		return this.view == 'Yearly' || this.view == 'Monthly';
 	}
 }
