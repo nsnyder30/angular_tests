@@ -1,23 +1,35 @@
 <div class="calendar-container">
-	<div class="year-container">
+	<!-- HEADER -->
+	<div class="calendar-navigator prev text-center">
+		<
+	</div>
+	
+	<div class="calendar-title text-center text-nowrap">
+		{{calendarTitle}}
 	</div>
 
-	<div class="month-container" *ngFor="let mnth of months">
+	<div class="calendar-navigator next text-center text-nowrap">
+		>
+	</div>
+	
+
+	<!-- CALENDAR CELLS -->
+	<ng-container *ngShow="false">
+	<div class="year-container">
+	</div>
+	</ng-container>
+
+	<div *ngFor="let mnth of months" (click)="selectMonth(mnth)" class="month-container mn{{mnth}} border border-secondary text-center align-middle">
 		{{ getMonthName(mnth) }}
 	</div>
 
-	<div class="week-container" *ngFor="let week of weeks">
+	<ng-container *ngShow="false">
+	<div *ngFor="let week of weeks" class="week-container wk{{week}} border border-secondary text-center">
 	</div>
+	</ng-container>
 
-	<div class="day-container" *ngFor="day of days">
+	<ng-container *ngShow="showDays()">
+	<div *ngFor="let day of days" (click)="selectDay(day)" class="day-container dy{{day}} border border-secondary text-center">
 	</div>
-</div
-
->
-<div class="calendar-container" [@viewTransition]="view">
-	<div class="row" *ngFor="let row of [0, 1, 2, 3]">
-		<div [@monthTransition]="selectedMonth == row * 4 + col ? 'expanded' : 'collapsed'" class="col month-cell border border-secondary" *ngFor="let col of [0, 1, 2]" (click)="selectMonth(row * 4 + col)">
-			{{row * 4 + col}}
-		</div>
-	</div>
+	</ng-container>
 </div>
