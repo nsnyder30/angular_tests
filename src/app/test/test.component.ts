@@ -53,11 +53,7 @@ export class TestComponent {
 	days = Array.from({ length: 35 }).map((v, i) => i);
 	
 	getMonthName(month: number, short?: boolean) {
-		if(short) {
-			return this.month_list[month].substr(0, 3);
-		}
-
-		return this.month_list[month];
+		return short ? this.month_list[month].substr(0, 3) : this.month_list[month];
 	}
 
 	getDayText(day: number) {
@@ -75,7 +71,7 @@ export class TestComponent {
 				this.calendarTitle = (this.selectedDate.getFullYear()).toString();
 				break;
 			case 'Monthly':
-				this.calendarTitle = this.getMonthName(this.selectedDate.getMonth());
+				this.calendarTitle = [this.getMonthName(this.selectedDate.getMonth()), this.selectedDate.getFullYear().toString()].join(' ');
 				break;
 			case 'Weekly':
 				let week_start = new Date(this.selectedDate);
@@ -98,6 +94,27 @@ export class TestComponent {
 		this.updateTitle();
 	}
 
+	transition(dir: string) {
+		const coeff = dir == 'next' ? 1 : -1;
+		switch(this.view) {
+			case 'Yearly':
+				this.selectedDate.setFullYear(this.selectedDate.getFullYear() + coeff);
+				break;
+			case 'Monthly':
+				this.selectedDate.setDate(1);
+				this.selectedDate.setMonth(this.selectedDate.getMonth() + coeff);
+				break;
+			case 'Weekly':
+				this.selectedDate.setDate(this.selectedDate.getDate() + 7 * coeff);
+				break;
+			case 'Daily':
+				this.selectedDate.setDate(this.selectedDate.getDate() + coeff);
+				break;
+
+		}
+		this.updateTitle();
+	}
+
 	titleClick() {
 		switch(this.view) {
 			case 'Monthly': this.toggleView('Yearly'); break;
@@ -114,7 +131,6 @@ export class TestComponent {
 	}
 
 	selectDay(day: number) {
-console.log({msg: 'select Day fired'});
 		if(this.view == 'Monthly' || this.view == 'Weekly' || this.view == 'Daily') {
 			this.selectedDate = this.idx_to_date(day);
 			this.weekStart = this.selectedDate.getTime() - this.selectedDate.getDay() * 24 * 3600 * 1000;
@@ -125,8 +141,7 @@ console.log({msg: 'select Day fired'});
 	}
 
 	selectMonth(month: number) {
-console.log({msg: 'select Month fired'});
-		if(this.selectedMonth == month) {
+		if(this.selectedMonth == month && this.view == 'Monthly') {
 			this.selectedMonth = -1;
 			this.toggleView('Yearly');
 		} else {
