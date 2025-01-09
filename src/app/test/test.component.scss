@@ -1,19 +1,33 @@
-$header_height: 8%;
-$month_height: (100% - $header_height) / 4;
+$header_height: 30px;
+/* $month_height: (100% - $header_height) / 4; */
 $month_width: 100% / 3;
-$day_height: (100% - $header_height) / 5;
+/* $day_height: (100% - $header_height) / 5; */
+$day_height: (100% - 8%) / 5;
 $day_width: 100% / 7;
 
-$standard_transition: 500ms ease-in-out;
-$rapid_transition: 200ms ease-in-out;
-$delayed_transition: 200ms ease-in-out 300ms;
+$standard_transition: 250ms ease-in-out;
+$rapid_transition: 100ms ease-in-out;
+$delayed_transition: 100ms ease-in-out 150ms;
 
 .calendar-container {
 	position: relative;
 	top: 5px;
 	left: 5px;
 	height: 40%;
-	width: 50%;
+	width: 75%;
+	transition: all #{$standard_transition};
+
+	&.Yearly {
+	}
+	&.Monthly {
+	}
+	&.Weekly {
+		height: 20%;
+	}
+	&.Daily {
+		height: 20%;
+		width: 40%;
+	}
 }
 
 .calendar-header {
@@ -45,7 +59,7 @@ $delayed_transition: 200ms ease-in-out 300ms;
 .month-container {
 	position: absolute;
 	z-index: 12;
-	height: $month_height;
+	height: calc((100% - #{$header_height}) / 4);
 	width: $month_width;
 	cursor: pointer;
 	transition: 
@@ -67,7 +81,7 @@ $delayed_transition: 200ms ease-in-out 300ms;
 
 	&.hidden {
 		width: $month_width;
-		height: $month_height;
+		height: calc(100% - #{$header_height}) / 4;
 		opacity: 0;
 		transition:
 			top #{$standard_transition}, 
@@ -94,7 +108,7 @@ $delayed_transition: 200ms ease-in-out 300ms;
 	@for $c from 0 through 2 {
 		$mn: $r * 3 + $c;
 		:not(.selected).month-container.mn#{$mn} {
-			top: $header_height + $month_height * $r;
+			top: calc(#{$header_height} + (100% - #{$header_height}) * $r / 4);
 			left: $c * $month_width;
 		}
 	}
@@ -114,7 +128,7 @@ $delayed_transition: 200ms ease-in-out 300ms;
 		opacity #{$delayed_transition};
 	
 	&.selectedWeek {
-		height: 100% - $header_height;
+		height: calc(100% - #{$header_height});
 		top: $header_height;
 		@for $r from 0 through 4 {
 			@for $c from 0 through 6 {
@@ -136,7 +150,7 @@ $delayed_transition: 200ms ease-in-out 300ms;
 	}
 
 	&.selectedDay {
-		height: 100% - $header_height;
+		height: calc(100% - #{$header_height});
 		top: $header_height;
 		left: 0%;
 		width: 100%;
@@ -169,7 +183,7 @@ $delayed_transition: 200ms ease-in-out 300ms;
 		:not(.selectedDay).day-container.dy#{$d} {
 			left: $c * $day_width;
 			&:not(.selectedWeek) {
-				top: $header_height + $r * $day_height;
+				top: calc(#{$header_height} + $r * #{$day_height});
 			}
 		}
 	}
