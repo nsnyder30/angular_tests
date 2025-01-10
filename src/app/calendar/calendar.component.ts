@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { trigger, transition, state, style, animate, query, group } from '@angular/animations';
 import { LayoutService } from '../services/layout.service';
+import { HeaderService } from '../services/header.service';
 
 @Component({
 	selector: 'app-calendar',
@@ -10,8 +11,8 @@ import { LayoutService } from '../services/layout.service';
 	animations:  []
 })
 
-export class CalendarComponent {
-	constructor(private layoutService: LayoutService) {}
+export class CalendarComponent implements OnInit {
+	constructor(private layoutService: LayoutService, private headerService: HeaderService) {}
 
 	ngOnInit() {
 		this.layoutService.updateLayoutState({
@@ -20,6 +21,8 @@ export class CalendarComponent {
 			hasHeader: true, 
 			hasFooter: false
 		});
+
+		this.headerService.setHeaderContent('Calendar Header');
 	}
 
 	view = 'Monthly';
