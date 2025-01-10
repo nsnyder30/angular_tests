@@ -17,7 +17,7 @@ $fpanel_height: 50px;
 	& > .cpanel {
 		transition: all $standard_transition;
 		position: absolute;
-		top: 0%;
+		top: var(--cpanel-top);
 		left: 0%;
 		height: 100%;
 		width: 100%;
@@ -25,21 +25,21 @@ $fpanel_height: 50px;
 
 	&.hasHeader {
 		& > .cpanel {
-			height: calc(100% - #{$hpanel_height});	
-			top: $hpanel_height;
+			height: calc(100% - var(--hpanel-height));
+			top: calc(var(--cpanel-top) + var(--hpanel-height));
 		}
 
 		& > .hpanel {
 			position: absolute;
 			top: 0px;
 			left: 0px;
-			height: $hpanel_height;
+			height: var(--hpanel-height);
 			width: 100%;
 			display: block;
 		}
 
 		&.hasFooter > .cpanel {
-			height: calc(100% - #{$hpanel_height} - #{$fpanel_height});
+			height: calc(100% - var(--hpanel-height) - #{$fpanel_height});
 		}
 	}
 

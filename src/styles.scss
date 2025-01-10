@@ -1,6 +1,11 @@
 /* You can add global styles to this file, and also import other style files */
 @use "../node_modules/bootstrap/scss/bootstrap";
 
+:root {
+	--hpanel-height: 50px;
+	--cpanel-top: 0px;
+}
+
 .a-text--noselect {
   -webkit-touch-callout: none; /* iOS Safari */
   -webkit-user-select: none; /* Safari */
