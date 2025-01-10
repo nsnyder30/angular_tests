@@ -2,7 +2,7 @@
 <div class="layout" [ngClass]="layoutClasses">
 
 	<!-- LEFT SIDE PANEL -->
-	<div class="lpanel bg-dark pt-1 text-center border border-secondary">
+	<div class="lpanel bg-dark text-light pt-1 text-center border border-secondary">
 		<div class="py-1 nav-icon">
 			<img [routerLink]="['/home']" src="assets/images/home_icon_white.png" class="sidebar-icon" title="Home">
 		</div>
@@ -15,17 +15,17 @@
 	</div>
 
 	<!-- RIGHT SIDE PANEL -->
-	<div class="rpanel bg-dark pt-1 text-center border border-secondary">
+	<div class="rpanel bg-dark text-light pt-1 text-center border border-secondary">
 		Right Panel
 	</div>
 
 	<!-- HEADER PANEL -->
-	<div class="hpanel bg-dark px-1 border border-secondary">
-		Header
+	<div class="hpanel bg-dark text-light px-1 border border-secondary">
+		{{ headerContent }}
 	</div>
 
 	<!-- FOOTER PANEL -->
-	<div class="fpanel bg-dark px-1 border border-secondary">
+	<div class="fpanel bg-dark text-light px-1 border border-secondary">
 		Footer
 	</div>
 
