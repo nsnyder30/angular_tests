@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { TaskService } from '../services/task.service';
 import { DatePipe } from '@angular/common';
+import { LayoutService } from '../services/layout.service';
+import { HeaderService } from '../services/header.service';
 
 @Component({
   selector: 'app-project-grid',
@@ -12,8 +14,11 @@ import { DatePipe } from '@angular/common';
 
 export class ProjectGridComponent implements OnInit {
 	projects: any[] = [];
-
-	constructor(private taskService: TaskService, private datePipe: DatePipe) {}
+	
+	constructor(private layoutService: LayoutService, 
+		    private taskService: TaskService, 
+		    private headerService: HeaderService, 
+		    private datePipe: DatePipe) {}
 
 	ngOnInit(): void {
 		const userId = 1;
@@ -21,6 +26,15 @@ export class ProjectGridComponent implements OnInit {
 		this.taskService.getTasks(userId).subscribe((data) => {
 			this.projects = data;
 		});
+
+		this.layoutService.updateLayoutState({
+			hasLpanel: true, 
+			hasRpanel: false, 
+			hasHeader: true, 
+			hasFooter: false
+		})
+
+		this.headerService.setHeaderContent('Project Grid Header');
 	}
 
 	createProject(): void {
