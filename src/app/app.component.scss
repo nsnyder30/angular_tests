@@ -1,8 +1,109 @@
+@import "../global_vars.scss";
+
+$lpanel_width: 80px;
+$rpanel_width: 80px;
+$hpanel_height: 50px;
+$fpanel_height: 50px;
+
+.layout {
+	.lpanel, .rpanel, .hpanel, .fpanel {
+		display: none;
+		transition: all $standard_transition;
+	}
+
+	transition: all $standard_transition;
+	position: absolute;
+	top: 0%;
+	left: 0%;
+	height: 100%;
+	width: 100%;
+	&.hasHeader {
+		height: calc(100% - #{$hpanel_height});	
+		top: $hpanel_height;
+
+		& > .hpanel {
+			position: absolute;
+			top: 0px;
+			left: 0px;
+			height: $hpanel_height;
+			width: 100%;
+			display: block;
+		}
+
+		&.hasFooter {
+			height: calc(100% - #{$hpanel_height} - #{$fpanel_height});
+		}
+	}
+
+	&.hasFooter {
+		height: calc(100% - #{$fpanel_height});
+
+		& > .fpanel {
+			position: absolute;
+			bottom: 0px;
+			left: 0px;
+			height: $fpanel_height;
+			width: 100%;
+			display: block;
+		}
+	}
+
+	&.hasLpanel {
+		width: calc(100% - #{$lpanel_width});
+
+		& > .lpanel {
+			position: absolute;
+			top: 0px;
+			left: 0px;
+			height: 100%;
+			width: $lpanel_width;
+			display: block;
+		}
+
+		&.hasRpanel {
+			width: calc(100% - #{$lpanel_width} - #{$rpanel_width});
+
+			&.hasHeader {
+				& > .hpanel {
+					width: calc(100% - #{$lpanel_width} - #{$rpanel_width});
+				}
+			}
+		}
+
+		&.hasHeader {
+			& > .hpanel {
+				left: $lpanel_width;
+				width: calc(100% - #{$lpanel_width});
+			}
+		}
+	}
+
+	&.hasRpanel {
+		width: calc(100% - #{$rpanel_width});
+
+		& > .rpanel {
+			position: absolute;
+			top: 0px;
+			right: 0px;
+			height: 100%;
+			width: #{$rpanel_width};
+			display: block;
+		}
+
+		&.hasHeader {
+			& > .hpanel {
+				width: calc(100% - #{$rpanel_width});
+			}
+		}
+	}
+}
+
 .mpanel {
 	position: absolute;
-	left: 80px;
-	width: calc(100% - 80px);
-	height: 100%;
+	left: #{$lpanel_width};
+	top: #{$hpanel_height};
+	width: calc(100% - #{$lpanel_width});
+	height: calc(100% - #{$hpanel_height});
 }
 
 .spanel {
@@ -18,6 +119,12 @@
 .spanel--left {
 	left: 0px;
 	width: 80px;
+}
+
+.vpanel {
+	position: absolute;
+	height: 50px;
+	width: 100%;
 }
 
 .nav-icon {
