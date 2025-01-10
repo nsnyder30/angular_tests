@@ -1,13 +1,10 @@
+@import 'global_vars';
 $header_height: 30px;
 /* $month_height: (100% - $header_height) / 4; */
 $month_width: 100% / 3;
 /* $day_height: (100% - $header_height) / 5; */
 $day_height: (100% - 8%) / 5;
 $day_width: 100% / 7;
-
-$standard_transition: 250ms ease-in-out;
-$rapid_transition: 100ms ease-in-out;
-$delayed_transition: 100ms ease-in-out 150ms;
 
 .calendar-container {
 	position: relative;
