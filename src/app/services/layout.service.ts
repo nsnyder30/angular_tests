@@ -8,7 +8,7 @@ import { BehaviorSubject } from 'rxjs';
 export class LayoutService {
 	private layoutState = new BehaviorSubject({
 		hasRpanel: false, 
-		hasLpanel: false, 
+		hasLpanel: true, 
 		hasHeader: false,
 		hasFooter: false
 	});
