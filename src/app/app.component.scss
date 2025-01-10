@@ -6,20 +6,28 @@ $hpanel_height: 50px;
 $fpanel_height: 50px;
 
 .layout {
-	.lpanel, .rpanel, .hpanel, .fpanel {
+	& > .lpanel, 
+	& > .rpanel,
+        & > .hpanel, 
+	& > .fpanel {
 		display: none;
 		transition: all $standard_transition;
 	}
 
-	transition: all $standard_transition;
-	position: absolute;
-	top: 0%;
-	left: 0%;
-	height: 100%;
-	width: 100%;
+	& > .cpanel {
+		transition: all $standard_transition;
+		position: absolute;
+		top: 0%;
+		left: 0%;
+		height: 100%;
+		width: 100%;
+	}
+
 	&.hasHeader {
-		height: calc(100% - #{$hpanel_height});	
-		top: $hpanel_height;
+		& > .cpanel {
+			height: calc(100% - #{$hpanel_height});	
+			top: $hpanel_height;
+		}
 
 		& > .hpanel {
 			position: absolute;
@@ -30,13 +38,15 @@ $fpanel_height: 50px;
 			display: block;
 		}
 
-		&.hasFooter {
+		&.hasFooter > .cpanel {
 			height: calc(100% - #{$hpanel_height} - #{$fpanel_height});
 		}
 	}
 
 	&.hasFooter {
-		height: calc(100% - #{$fpanel_height});
+		& > .cpanel {
+			height: calc(100% - #{$fpanel_height});
+		}
 
 		& > .fpanel {
 			position: absolute;
@@ -49,7 +59,10 @@ $fpanel_height: 50px;
 	}
 
 	&.hasLpanel {
-		width: calc(100% - #{$lpanel_width});
+		& > .cpanel {
+			left: $lpanel_width;
+			width: calc(100% - #{$lpanel_width});
+		}
 
 		& > .lpanel {
 			position: absolute;
@@ -61,7 +74,9 @@ $fpanel_height: 50px;
 		}
 
 		&.hasRpanel {
-			width: calc(100% - #{$lpanel_width} - #{$rpanel_width});
+			& > .cpanel {
+				width: calc(100% - #{$lpanel_width} - #{$rpanel_width});
+			}
 
 			&.hasHeader {
 				& > .hpanel {
@@ -79,7 +94,9 @@ $fpanel_height: 50px;
 	}
 
 	&.hasRpanel {
-		width: calc(100% - #{$rpanel_width});
+		& > .cpanel {
+			width: calc(100% - #{$rpanel_width});
+		}
 
 		& > .rpanel {
 			position: absolute;

@@ -1,5 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { trigger, transition, state, style, animate, query, group } from '@angular/animations';
+import { LayoutService } from '../services/layout.service';
 
 @Component({
 	selector: 'app-calendar',
@@ -10,6 +11,17 @@ import { trigger, transition, state, style, animate, query, group } from '@angul
 })
 
 export class CalendarComponent {
+	constructor(private layoutService: LayoutService) {}
+
+	ngOnInit() {
+		this.layoutService.updateLayoutState({
+			hasLpanel: true, 
+			hasRpanel: false, 
+			hasHeader: true, 
+			hasFooter: false
+		});
+	}
+
 	view = 'Monthly';
 	selectedDate = new Date();
 	selectedMonth = -1;
