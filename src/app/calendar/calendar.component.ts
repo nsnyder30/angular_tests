@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
 import { trigger, transition, state, style, animate, query, group } from '@angular/animations';
 import { LayoutService } from '../services/layout.service';
 import { HeaderService } from '../services/header.service';
@@ -13,6 +13,8 @@ import { StyleUpdateService } from '../services/style-update.service';
 })
 
 export class CalendarComponent implements OnInit {
+	@ViewChild('calendarHeader', { static: true }) calendarHeader!: TemplateRef<any>;
+
 	constructor(private layoutService: LayoutService, 
 		    private headerService: HeaderService, 
 		    private styleUpdateService: StyleUpdateService) {}
@@ -25,7 +27,7 @@ export class CalendarComponent implements OnInit {
 			hasFooter: false
 		});
 
-		this.headerService.setHeaderContent('Calendar Header');
+		this.headerService.setHeaderTemplate(this.calendarHeader);
 
 		this.styleUpdateService.setCustomProperty('--hpanel-height', '100px');
 	}

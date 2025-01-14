@@ -33,8 +33,6 @@ export class ProjectGridComponent implements OnInit {
 			hasHeader: true, 
 			hasFooter: false
 		})
-
-		this.headerService.setHeaderContent('Project Grid Header');
 	}
 
 	createProject(): void {

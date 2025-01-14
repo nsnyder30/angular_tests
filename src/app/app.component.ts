@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, TemplateRef } from '@angular/core';
 import { Router, NavigationEnd } from '@angular/router';
 import { filter } from 'rxjs/operators';
 import { LayoutService } from './services/layout.service';
@@ -14,6 +14,8 @@ import { StyleUpdateService } from './services/style-update.service';
 
 export class AppComponent implements OnInit {
 	title = 'angular_app';
+	headerContentTemplate: TemplateRef<any> | null = null;
+
 	layoutClasses = {};
 	headerContent: string = 'Default Header';
 	
@@ -25,7 +27,6 @@ export class AppComponent implements OnInit {
 
 	ngOnInit() {
 		this.router.events.pipe(filter(event => event instanceof NavigationEnd)).subscribe(() => {
-			this.headerService.setHeaderContent('Default Header');
 			this.styleUpdateService.setCustomProperty('--hpanel-height', '50px');
 
 		});
@@ -39,8 +40,8 @@ export class AppComponent implements OnInit {
 			};
 		});
 
-		this.headerService.headerContent$.subscribe(content => {
-			this.headerContent = content;
+		this.headerService.headerTemplate$.subscribe(template => {
+			this.headerContentTemplate = template;
 		});
 	}
 }

@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, TemplateRef } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 
 @Injectable ({
@@ -6,9 +6,10 @@ import { BehaviorSubject } from 'rxjs';
 })
 
 export class HeaderService {
-	private headerContent = new BehaviorSubject<string>('');
-	headerContent$ = this.headerContent.asObservable();
-	setHeaderContent(content: string) {
-		this.headerContent.next(content);
+	private headerTemplate = new BehaviorSubject<TemplateRef<any> | null>(null);
+	headerTemplate$ = this.headerTemplate.asObservable();
+
+	setHeaderTemplate(template: TemplateRef<any>) {
+		this.headerTemplate.next(template);
 	}
 }

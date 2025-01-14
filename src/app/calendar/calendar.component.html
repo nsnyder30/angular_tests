@@ -1,3 +1,10 @@
+<!-- HEADER PANEL CONTENT -->
+<ng-template #calendarHeader>
+	<button (click)="toggleView('Daily')">Daily View</button>
+	<button (click)="toggleView('Monthly')">Monthly View</button>
+</ng-template>
+
+<!-- CALENDAR CONTENT -->
 <div class="calendar-container {{view}}">
 	<!-- HEADER -->
 	<div class="calendar-header border border-secondary">

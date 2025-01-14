@@ -21,7 +21,9 @@
 
 	<!-- HEADER PANEL -->
 	<div class="hpanel bg-dark text-light px-1 border border-secondary">
-		{{ headerContent }}
+		<ng-container *ngIf="headerContentTemplate">
+			<ng-template [ngTemplateOutlet]="headerContentTemplate"></ng-template>
+		</ng-container>
 	</div>
 
 	<!-- FOOTER PANEL -->
