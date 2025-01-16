@@ -1,15 +1,15 @@
 <div class="calendar-container {{view}}">
 	<!-- HEADER -->
 	<div class="calendar-header border border-secondary">
-		<div class="calendar-navigator prev text-center a-text--noselect u-clickable" (click)="transition('prev')">
+		<div class="calendar-navigator prev text-center u-text--noselect u-clickable" (click)="transition('prev')">
 			<<
 		</div>
 		
-		<div class="calendar-title text-center text-nowrap a-text--noselect u-clickable" (click)="titleClick()">
+		<div class="calendar-title text-center text-nowrap u-text--noselect u-clickable" (click)="titleClick()">
 			{{calendarTitle}}
 		</div>
 
-		<div class="calendar-navigator next text-center text-nowrap a-text--noselect u-clickable" (click)="transition('next')">
+		<div class="calendar-navigator next text-center text-nowrap u-text--noselect u-clickable" (click)="transition('next')">
 			>>
 		</div>
 	</div>
@@ -24,7 +24,7 @@
 	    class="month-container mn{{mnth}} border border-secondary text-center align-middle"
 	    [class.selected]="selection('month', 'Monthly', mnth)" 
 	    [class.hidden]="hide('month', mnth)">
-		<span class="a-text--noselect">{{ getMonthName(mnth) }}</span>
+		<span class="u-text--noselect">{{ getMonthName(mnth) }}</span>
 	</div>
 
 	<ng-container *ngShow="false">
@@ -38,7 +38,7 @@
 	     [class.selectedWeek]="selection('day', 'Weekly', day)" 
 	     [class.selectedDay]="selection('day', 'Daily', day)" 
 	     [class.hidden]="hide('day', day)">
-		<span class="a-text--noselect">{{ getDayText(day) }}</span>
+		<span class="u-text--noselect">{{ getDayText(day) }}</span>
 	</div>
 </div>
 

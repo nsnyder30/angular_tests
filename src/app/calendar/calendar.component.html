@@ -1,22 +1,29 @@
 <!-- HEADER PANEL CONTENT -->
 <ng-template #calendarHeader>
-	<button (click)="toggleView('Daily')">Daily View</button>
-	<button (click)="toggleView('Monthly')">Monthly View</button>
+	<div class="m-1">
+		<h6 class="u-color--lightgray pb-0">Calendar View</h6>
+		<div class="btn-group ps-3" role="group" aria-label="View Togglei">
+			<button type="button" class="btn btn-tiny btn-outline-info" [class.active]="view === 'Daily'" (click)="toggleView('Daily')">Daily</button>
+			<button type="button" class="btn btn-tiny btn-outline-info" [class.active]="view === 'Weekly'" (click)="toggleView('Weekly')">Weekly</button>
+			<button type="button" class="btn btn-tiny btn-outline-info" [class.active]="view === 'Monthly'" (click)="toggleView('Monthly')">Monthly</button>
+			<button type="button" class="btn btn-tiny btn-outline-info" [class.active]="view === 'Yearly'" (click)="toggleView('Yearly')">Yearly</button>
+		</div>
+	</div>
 </ng-template>
 
 <!-- CALENDAR CONTENT -->
 <div class="calendar-container {{view}}">
 	<!-- HEADER -->
 	<div class="calendar-header border border-secondary">
-		<div class="calendar-navigator prev text-center a-text--noselect u-clickable" (click)="transition('prev')">
+		<div class="calendar-navigator prev text-center u-text--noselect u-clickable" (click)="transition('prev')">
 			<<
 		</div>
 		
-		<div class="calendar-title text-center text-nowrap a-text--noselect u-clickable" (click)="titleClick()">
+		<div class="calendar-title text-center text-nowrap u-text--noselect u-clickable" (click)="titleClick()">
 			{{calendarTitle}}
 		</div>
 
-		<div class="calendar-navigator next text-center text-nowrap a-text--noselect u-clickable" (click)="transition('next')">
+		<div class="calendar-navigator next text-center text-nowrap u-text--noselect u-clickable" (click)="transition('next')">
 			>>
 		</div>
 	</div>
@@ -26,7 +33,7 @@
 	    class="month-container mn{{mnth}} border border-secondary text-center align-middle"
 	    [class.selected]="selection('month', 'Monthly', mnth)" 
 	    [class.hidden]="hide('month', mnth)">
-		<span class="a-text--noselect">{{ getMonthName(mnth) }}</span>
+		<span class="u-text--noselect">{{ getMonthName(mnth) }}</span>
 	</div>
 
 	<div *ngFor="let day of days" (click)="selectDay(day)" 
@@ -35,6 +42,6 @@
 	     [class.selectedWeek]="selection('day', 'Weekly', day)" 
 	     [class.selectedDay]="selection('day', 'Daily', day)" 
 	     [class.hidden]="hide('day', day)">
-		<span class="a-text--noselect">{{ getDayText(day) }}</span>
+		<span class="u-text--noselect">{{ getDayText(day) }}</span>
 	</div>
 </div>
