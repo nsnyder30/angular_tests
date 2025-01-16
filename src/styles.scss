@@ -6,7 +6,93 @@
 	--cpanel-top: 0px;
 }
 
-.a-text--noselect {
+/*---------------------------------------------BOOTSTRAP MODIFICATIONS---------------------------------------------*/
+.btn-tiny{
+	padding: 0rem 0.5rem;
+	font-size: 0.75rem;
+}
+.btn-primary.u-clickable:hover{
+	background-color: #1f4e78;
+	color: #FFF;
+}
+.btn-secondary.u-clickable:hover{
+	background-color: #f2f2f2;
+	color: #000;
+}
+.btn-success.u-clickable:hover{
+	background-color: #006300;
+	color: #FFF;
+}
+.btn-danger.u-clickable:hover{
+	background-color: #a1000f;
+	color: #FFF;
+	font-weight: bold;
+}
+.btn-warning.u-clickable:hover{
+	background-color: #f60;
+	color: #FFF;
+}
+.btn-info.u-clickable:hover{
+	background-color: #0d616e;
+	color: #FFF;
+}
+
+.table .thead-dark th.u-clickable:hover, .table .thead-dark td.u-clickable:hover {
+	color: #000;
+	background-color: #CCC;
+}
+
+.table .thead-light th.u-clickable:hover, .table .thead-light td.u-clickable:hover {
+	color: #e9ecef;
+	background-color: #495057;
+}
+/*-----------------------------------------------------------------------------------------------------------------*/
+
+
+/*------------------------------------------------CUSTOM FONT COLORS-----------------------------------------------*/
+.a-color--black, .a-color--black a, a.a-color--black {color: #000;}
+.a-color--darkgray, .a-color--darkgray a, a.a-color--darkgray {color: #343a40;}
+.a-color--gray, .a-color--gray a, a.a-color--gray {color: #999;}
+.a-color--lightgray, .a-color--lightgray a, a.a-color--lightgray {color: #f2f2f2;}
+
+.a-color--blue, .a-color--blue a, a.a-color--blue {color: #00F;}
+.a-color--blue.u-clickable:hover, .a-color--blue.u-clickable a:hover, a.a-color--blue.u-clickable:hover {
+  color: #FFF;
+  background-color: #00f;}
+
+.a-color--green, .a-color--green a, a.a-color--green {color: #0F0;}
+.a-color--green.u-clickable:hover, .a-color--green.u-clickable a:hover, a.a-color--green.u-clickable:hover {
+  color: #FFF;
+  background-color: #0F0;}
+
+.a-color--lightgreen, .a-color--lightgreen a, a.a-color--lightgreen {color: #CFC;}
+.a-color--lightgreen.u-clickable:hover, .a-color--lightgreen.u-clickable a:hover, a.a-color--lightgreen.u-clickable:hover {
+  color: #FFF;
+  background-color: #CFC;}
+
+.a-color--red, .a-color--red a, a.a-color--red {color: #F00;}
+.a-color--red.u-clickable:hover, .a-color--red.u-clickable:hover a, a.a-color--red.u-clickable:hover {
+  color: #FFF;
+  background-color: #F00;
+}
+
+.a-color--lightred, .a-color--lightred a, a.a-color--lightred {color: #F77;}
+.a-color--lightred.u-clickable:hover, .a-color--lightred.u-clickable:hover a, a.a-color--lightred.u-clickable:hover {
+  color: #000;
+  background-color: #F77;
+}
+
+.a-color--white, .a-color--white a, a.a-color--white {color: #FFF;}
+.a-color--pink, .a-color--pink a, a.a-color--pink {color: #F3F;}
+/*-----------------------------------------------------------------------------------------------------------------*/
+
+
+/*-------------------------------------------------UTILITY CLASSES-------------------------------------------------*/
+.u-clickable {
+	cursor: pointer;
+}
+
+.u-text--noselect {
   -webkit-touch-callout: none; /* iOS Safari */
   -webkit-user-select: none; /* Safari */
   -khtml-user-select: none; /* Konqueror HTML */
@@ -15,14 +101,4 @@
   user-select: none; /* Non-prefixed version, currently
    supported by Chrome, Edge, Opera and Firefox */
 }
-
-.a-color--gray {
-	color: #999;
-}
-.a-color--lightgray {
-	color: #f2f2f2;
-}
-
-.u-clickable {
-	cursor: pointer;
-}
+/*-----------------------------------------------------------------------------------------------------------------*/
