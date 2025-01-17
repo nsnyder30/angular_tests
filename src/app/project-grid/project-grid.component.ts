@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
 import { TaskService } from '../services/task.service';
 import { DatePipe } from '@angular/common';
 import { LayoutService } from '../services/layout.service';
@@ -13,6 +13,7 @@ import { HeaderService } from '../services/header.service';
 })
 
 export class ProjectGridComponent implements OnInit {
+	@ViewChild('projectGridHeader', { static: true }) projectGridHeader!: TemplateRef<any>;
 	projects: any[] = [];
 	
 	constructor(private layoutService: LayoutService, 
@@ -33,6 +34,8 @@ export class ProjectGridComponent implements OnInit {
 			hasHeader: true, 
 			hasFooter: false
 		})
+
+		this.headerService.setHeaderTemplate(this.projectGridHeader);
 	}
 
 	createProject(): void {
