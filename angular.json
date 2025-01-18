@@ -39,7 +39,8 @@
 	      "src/assets"
             ],
             "styles": [
-	      "node_modules/bootstrap/dist/css/bootstrap.min.css",
+              "@angular/material/prebuilt-themes/rose-red.css",
+              "node_modules/bootstrap/dist/css/bootstrap.min.css",
               "src/styles.scss"
             ],
 	    "stylePreprocessorOptions": {
@@ -103,7 +104,8 @@
 	      "src/assets"
             ],
             "styles": [
-	      "node_modules/bootstrap/dist/css/bootstrap.min.css",
+              "@angular/material/prebuilt-themes/rose-red.css",
+              "node_modules/bootstrap/dist/css/bootstrap.min.css",
               "src/styles.scss"
             ],
 	    "stylePreprocessorOptions": {
