@@ -1,4 +1,6 @@
 import { Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
+import { MatDialog, MatDialogRef } from '@angular/material/dialog';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { TaskService } from '../services/task.service';
 import { DatePipe } from '@angular/common';
 import { LayoutService } from '../services/layout.service';
@@ -14,12 +16,19 @@ import { HeaderService } from '../services/header.service';
 
 export class ProjectGridComponent implements OnInit {
 	@ViewChild('projectGridHeader', { static: true }) projectGridHeader!: TemplateRef<any>;
+	@ViewChild('taskDialog', { static: true }) 
+	taskDialog!: TemplateRef<any>;
+	taskCreationForm!: FormGroup;
+	dialogRef!: MatDialogRef<any>;
+
 	projects: any[] = [];
 	
 	constructor(private layoutService: LayoutService, 
 		    private taskService: TaskService, 
 		    private headerService: HeaderService, 
-		    private datePipe: DatePipe) {}
+		    private datePipe: DatePipe, 
+		    private dialog: MatDialog, 
+		    private fb: FormBuilder) {}
 
 	ngOnInit(): void {
 		const userId = 1;
@@ -36,10 +45,42 @@ export class ProjectGridComponent implements OnInit {
 		})
 
 		this.headerService.setHeaderTemplate(this.projectGridHeader);
+
+		this.taskCreationForm = this.fb.group({
+			task_name: ['', [Validators.required, Validators.minLength(3)]]
+		});
+	}
+
+	openTaskDialog(): void {
+		this.dialogRef = this.dialog.open(this.taskDialog, { width: '400px' });
+	}
+
+	closeDialog(): void {
+		if (this.dialogRef) {
+			this.dialogRef.close();
+		}
+	}
+
+	submitTask(): void {
+		if(this.taskCreationForm.valid) {
+			const taskData = {
+				task_name: this.taskCreationForm.value.task_name, 
+				task_owner: 1
+			};
+
+			this.taskService
+				.createTask(taskData)
+				.subscribe(() => {
+					console.log('Taskcreated successfully');
+					this.closeDialog();
+					this.taskCreationForm.reset();
+				});
+		}
 	}
 
 	createProject(): void {
 		console.log('Create New Project button clicked');
+		this.openTaskDialog();
 	}
 
 	toggleTask(task: any): void {
