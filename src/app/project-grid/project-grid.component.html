@@ -1,7 +1,30 @@
-<div class="project-controls p-2">
-	<button class="btn btn-sm btn-info" (click)="createProject()">Create New Project</button>
-</div>
+<!-- HEADER PANEL: PROJECT GRID CONTROLS -->
+<ng-template #projectGridHeader>
+	<div class="m-1">
+		<button class="btn btn-sm btn-outline-info" (click)="createProject()">Create New Project</button>
+	</div>
+</ng-template>
 
+
+<!-- NEW TASK CREATION UI TEMPLATE -->
+<ng-template #taskDialog>
+	<h2 mat-dialog-title>Create New Project</h2>
+	<mat-dialog-content>
+		<form [formGroup]="taskCreationForm">
+			<mat-form-field>
+				<mat-label>Task Name</mat-label>
+				<input matInput formControlName="task_name">
+			</mat-form-field>
+		</form>
+	</mat-dialog-content>
+	<mat-dialog-actions>
+		<button mat-button (click)="closeDialog()">Cancel</button>
+		<button mat-button (click)="submitTask()">Submit</button>
+	</mat-dialog-actions>
+</ng-template>
+
+
+<!-- MAIN PANEL: PROJECT GRID CONTENT -->
 <div class="project-grid p-2">
 	<div *ngFor="let project of projects" class="project-card border border-dark-subtle rounded p-1 mb-2">
 		<table class="w-100">

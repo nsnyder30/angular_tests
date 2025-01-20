@@ -8,23 +8,7 @@ import { LayoutService } from './services/layout.service';
 import { HeaderService } from './services/header.service';
 import { StyleUpdateService } from './services/style-update.service';
 
-class MockLayoutService {
-	layoutState$ = of({ hasRpanel: true, 
-			    hasLpanel: true, 
-			    hasHeader: true, 
-			    hasFooter: true
-	});
-}
-
-class MockHeaderService {
-	headerTemplate$ = of(null);
-}
-
-class MockStyleUpdateService {
-	setCustomProperty(property: string, value: string) {}
-}
-
-describe('Sanity Check', () => {
+describe('AppComponent', () => {
 	it('should pass', () => {
 		expect(true).toBe(true);
 	});

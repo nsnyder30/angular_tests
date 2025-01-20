@@ -30,6 +30,7 @@ export class CalendarComponent implements OnInit {
 		this.headerService.setHeaderTemplate(this.calendarHeader);
 
 		this.styleUpdateService.setCustomProperty('--hpanel-height', '100px');
+		this.updateTitle();
 	}
 
 	view = 'Monthly';

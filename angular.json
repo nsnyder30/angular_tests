@@ -39,7 +39,8 @@
 	      "src/assets"
             ],
             "styles": [
-	      "node_modules/bootstrap/dist/css/bootstrap.min.css",
+              "@angular/material/prebuilt-themes/rose-red.css",
+              "node_modules/bootstrap/dist/css/bootstrap.min.css",
               "src/styles.scss"
             ],
 	    "stylePreprocessorOptions": {
@@ -89,7 +90,7 @@
         "test": {
           "builder": "@angular-devkit/build-angular:karma",
           "options": {
-	    "karmaConfig": "./karma.conf.js", 
+	    "browsers": "ChromeHeadlessCI", 
             "polyfills": [
 		    "src/polyfills.ts" 
             ],
@@ -102,7 +103,8 @@
 	      "src/assets"
             ],
             "styles": [
-	      "node_modules/bootstrap/dist/css/bootstrap.min.css",
+              "@angular/material/prebuilt-themes/rose-red.css",
+              "node_modules/bootstrap/dist/css/bootstrap.min.css",
               "src/styles.scss"
             ],
 	    "stylePreprocessorOptions": {
@@ -112,7 +114,8 @@
 	    }, 
             "scripts": [
 	    	"node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"
-	    ]
+      ],
+      "karmaConfig": "karma.conf.js"
           }
         }
       }
