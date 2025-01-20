@@ -65,21 +65,21 @@ export class ProjectGridComponent implements OnInit {
 		if(this.taskCreationForm.valid) {
 			const taskData = {
 				task_name: this.taskCreationForm.value.task_name, 
-				task_owner: 1
+				task_owner: 1, 
+				task_parent: -1
 			};
-
 			this.taskService
 				.createTask(taskData)
-				.subscribe(() => {
-					console.log('Taskcreated successfully');
+				.subscribe((data) => {
+					this.projects.push(data);
 					this.closeDialog();
 					this.taskCreationForm.reset();
 				});
+		} else {
 		}
 	}
 
 	createProject(): void {
-		console.log('Create New Project button clicked');
 		this.openTaskDialog();
 	}
 
