@@ -34,7 +34,7 @@
             "assets": [
               {
                 "glob": "**/*",
-                "input": "public", 
+                "input": "public" 
               }, 
 	      "src/assets"
             ],
@@ -89,9 +89,9 @@
         "test": {
           "builder": "@angular-devkit/build-angular:karma",
           "options": {
+	    "karmaConfig": "./karma.conf.js", 
             "polyfills": [
-              "zone.js",
-              "zone.js/testing"
+		    "src/polyfills.ts" 
             ],
             "tsConfig": "tsconfig.spec.json",
             "assets": [
@@ -105,8 +105,13 @@
 	      "node_modules/bootstrap/dist/css/bootstrap.min.css",
               "src/styles.scss"
             ],
+	    "stylePreprocessorOptions": {
+		    "includePaths": [
+			    "src"
+		    ]
+	    }, 
             "scripts": [
-	    	"node_modules/bootstrap/js/bootstrap.bundle.min.js"
+	    	"node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"
 	    ]
           }
         }
